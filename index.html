@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>مركز الاختبارات - ميول مهنية، لغة إنجليزية، ذكاء IQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tv-green: #006747;
+            --dark-grey: #333333;
+            --light-grey: #f4f4f4;
+            --white: #ffffff;
+            --accent: #00a86b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--dark-grey);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--tv-green);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #5a6e7a;
+            font-size: 1.1rem;
+        }
+
+        /* بطاقات الاختيار */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .test-card {
+            background: var(--white);
+            border-radius: 28px;
+            padding: 25px 20px;
+            width: 280px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .test-card.active {
+            border-color: var(--tv-green);
+            background: #f0f9f4;
+        }
+
+        .test-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .test-card h3 {
+            color: var(--tv-green);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        .test-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* منطقة عرض الاختبار */
+        .test-area {
+            background: var(--white);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 30px 35px 45px;
+            transition: all 0.2s;
+        }
+
+        .test-content {
+            display: none;
+        }
+
+        .test-content.active-test {
+            display: block;
+        }
+
+        /* نفس الأنماط السابقة للاختبارات مع تعديلات بسيطة */
+        .intro-box {
+            background: #f0f9f4;
+            padding: 20px 25px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            border-right: 6px solid var(--tv-green);
+        }
+        .level-badge {
+            display: inline-block;
+            background: var(--tv-green);
+            color: white;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+        .question-card {
+            background: #fefefe;
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f0;
+        }
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #1a3a2f;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 12px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: var(--light-grey);
+            padding: 10px 15px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #d0dbd5;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #2c4b3e;
+        }
+        .option.selected {
+            background: var(--tv-green);
+            border-color: var(--tv-green);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,103,71,0.25);
+        }
+        .progress-bar-container {
+            background: #e0e8e3;
+            border-radius: 30px;
+            height: 10px;
+            margin: 20px 0 28px;
+        }
+        .progress-fill {
+            background: var(--tv-green);
+            width: 0%;
+            height: 10px;
+            border-radius: 30px;
+            transition: width 0.25s ease;
+        }
+        .btn {
+            background: var(--tv-green);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 20px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn:hover {
+            background: var(--accent);
+            transform: scale(0.98);
+        }
+        .result-area {
+            background: #f4faf7;
+            border-radius: 28px;
+            padding: 24px;
+            margin-top: 35px;
+            display: none;
+            border-right: 8px solid var(--tv-green);
+        }
+        .result-level {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--tv-green);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .level-description {
+            background: white;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border: 1px solid #d9e5df;
+        }
+        .reset-btn {
+            background: #5f7b6e;
+            margin-top: 12px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 700px) {
+            .test-area { padding: 20px; }
+            .cards-container { gap: 15px; }
+            .test-card { width: 220px; padding: 15px; }
+            .test-icon { font-size: 2.5rem; }
+            .test-card h3 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <div class="header">
+        <h1>📋 مركز الاختبارات المتكامل</h1>
+        <p>اختر أحد الاختبارات التالية لتقييم مهاراتك وقدراتك</p>
+    </div>
+
+    <div class="cards-container">
+        <div class="test-card" data-test="holland">
+            <div class="test-icon">🧭</div>
+            <h3>الميول المهنية</h3>
+            <p>نظرية هولاند – اكتشف مسارك الوظيفي المناسب</p>
+        </div>
+        <div class="test-card" data-test="english">
+            <div class="test-icon">📘</div>
+            <h3>اللغة الإنجليزية</h3>
+            <p>CEFR – حدد مستواك من A1 إلى C2</p>
+        </div>
+        <div class="test-card" data-test="iq">
+            <div class="test-icon">🧠</div>
+            <h3>اختبار الذكاء IQ</h3>
+            <p>قياس القدرات المنطقية والرياضية</p>
+        </div>
+    </div>
+
+    <div class="test-area">
+        <!-- اختبار الميول المهنية -->
+        <div id="holland-test" class="test-content">
+            <h2 style="color: var(--tv-green); margin-bottom: 20px;">🧭 اختبار الميول المهنية (هولاند)</h2>
+            <div class="intro-box">
+                <h3>✨ ما هو هذا الاختبار؟</h3>
+                <p>اختبار عالمي مبني على نظرية هولاند، يقسم الشخصيات إلى <strong>6 أنواع</strong> مهنية. ستجيب على 30 عبارة (درجة من 1 إلى 5). ستكتشف أقرب نمط لشخصيتك، وتوصيات بالتخصصات والوظائف المناسبة لك.</p>
+            </div>
+            <div class="progress-bar-container"><div class="progress-fill" id="holland-progress"></div></div>
+            <div id="holland-questions"></div>
+            <button class="btn" id="holland-submit">🚀 احسب نتيجتي</button>
+            <div id="holland-result" class="result-area"></div>
+            <button class="btn reset-btn" id="holland-reset" style="display:none;">🔄 إعادة الاختبار</button>
+        </div>
+
+        <!-- اختبار اللغة الإنجليزية -->
+        <div id="english-test" class="test-content">
+            <h2 style="color: var(--tv-green); margin-bottom: 20px;">📘 اختبار اللغة الإنجليزية (CEFR)</h2>
+            <div class="intro-box">
+                <h3>🌍 ما هو هذا الاختبار؟</h3>
+                <p>اختبار معتمد عالمياً وفق <strong>الإطار الأوروبي المرجعي للغات (CEFR)</strong>. يتكون من 30 سؤالاً تغطي القواعد والمفردات من A1 إلى C2.</p>
+            </div>
+            <div class="progress-bar-container"><div class="progress-fill" id="english-progress"></div></div>
+            <div id="english-questions"></div>
+            <button class="btn" id="english-submit">📊 احسب مستواي</button>
+            <div id="english-result" class="result-area"></div>
+            <button class="btn reset-btn" id="english-reset" style="display:none;">🔄 إعادة الاختبار</button>
+        </div>
+
+        <!-- اختبار الذكاء -->
+        <div id="iq-test" class="test-content">
+            <h2 style="color: var(--tv-green); margin-bottom: 20px;">🧠 اختبار الذكاء IQ</h2>
+            <div class="intro-box">
+                <h3>⚡ ما هو اختبار الذكاء؟</h3>
+                <p>اختبار لقياس القدرات العقلية والمنطقية. 30 سؤالاً متنوعاً مع تصنيف معياري لنتيجة الذكاء.</p>
+            </div>
+            <div class="progress-bar-container"><div class="progress-fill" id="iq-progress"></div></div>
+            <div id="iq-questions"></div>
+            <button class="btn" id="iq-submit">📊 احسب نسبة الذكاء</button>
+            <div id="iq-result" class="result-area"></div>
+            <button class="btn reset-btn" id="iq-reset" style="display:none;">🔄 إعادة الاختبار</button>
+        </div>
+    </div>
+    <footer>جميع الاختبارات تقديرية وليست بديلة عن التقييمات الرسمية المعتمدة</footer>
+</div>
+
+<script>
+    // ======================= بيانات اختبار الميول المهنية =======================
+    const hollandQuestions = [
+        { text: "أستمتع باستخدام الأدوات اليدوية والآلات وإصلاح الأعطال.", type: "R" },{ text: "أفضل العمل في الهواء الطلق أو في ورشة بدلاً من المكتب.", type: "R" },{ text: "أحب الزراعة، النجارة، أو الميكانيكا.", type: "R" },{ text: "أتعلم بسرعة كيفية تشغيل الأجهزة والمعدات.", type: "R" },{ text: "أحب الأنشطة التي تتطلب قوة بدنية ومهارة حركية.", type: "R" },
+        { text: "أحب البحث وحل المسائل العلمية والرياضية.", type: "I" },{ text: "أمضي وقتاً في القراءة عن العلوم أو التكنولوجيا.", type: "I" },{ text: "أستمتع بتحليل البيانات واكتشاف الأخطاء المنطقية.", type: "I" },{ text: "أفضل العمل بشكل مستقل في مختبر أو بيئة بحثية.", type: "I" },{ text: "أحب التجارب والألغاز التي تحتاج إلى تفكير عميق.", type: "I" },
+        { text: "لدي موهبة في الرسم، التصميم، أو الكتابة الإبداعية.", type: "A" },{ text: "أحب الموسيقى، المسرح، أو التعبير الفني.", type: "A" },{ text: "أفكر غالباً خارج الصندوق وأكره الروتين.", type: "A" },{ text: "أستمتع بتصميم أشياء جديدة أو إعادة تزيين الغرف.", type: "A" },{ text: "أحب متابعة المعارض الفنية أو العروض الثقافية.", type: "A" },
+        { text: "أحب مساعدة الآخرين وحل مشاكلهم.", type: "S" },{ text: "أتمتع بمهارة الاستماع والتعاطف مع الناس.", type: "S" },{ text: "أفضل العمل ضمن فريق أو تقديم النصح للزملاء.", type: "S" },{ text: "أحب تدريس أو توجيه الأطفال أو الكبار.", type: "S" },{ text: "أشارك في الأعمال التطوعية أو الأنشطة الاجتماعية.", type: "S" },
+        { text: "أحب قيادة الفرق وإقناع الآخرين بآرائي.", type: "E" },{ text: "لدي طموح لبدء مشروعي الخاص أو تحقيق منصب قيادي.", type: "E" },{ text: "أستمتع بالمبيعات، التفاوض، أو التسويق.", type: "E" },{ text: "أتخذ قرارات سريعة وأحب تحمل المسؤولية.", type: "E" },{ text: "أهتم بتحقيق النجاح المادي والمكانة الاجتماعية.", type: "E" },
+        { text: "أحب تنظيم الملفات والبيانات والالتزام بالأنظمة.", type: "C" },{ text: "أتقن العمل على برامج المحاسبة أو الجداول بدقة.", type: "C" },{ text: "أفضل المهام الروتينية الواضحة والتعليمات المفصلة.", type: "C" },{ text: "أهتم بالتفاصيل والترتيب والنظافة في مكتبي.", type: "C" },{ text: "أشعر بالارتياح عند اتباع الإجراءات الإدارية بدقة.", type: "C" }
+    ];
+    let hollandAnswers = new Array(30).fill(null);
+    const hollandRec = { R:{name:"واقعي (عملي)",jobs:["ميكانيكي","كهربائي","نجار"],studies:["الميكانيكا","الهندسة"]}, I:{name:"استقصائي (محلل)",jobs:["عالم","محلل بيانات"],studies:["الفيزياء","علوم حاسوب"]}, A:{name:"فني / مبدع",jobs:["مصمم جرافيك","رسام"],studies:["التصميم","الفنون"]}, S:{name:"اجتماعي",jobs:["معلم","أخصائي اجتماعي"],studies:["علم النفس","التربية"]}, E:{name:"مقنع / قيادي",jobs:["مدير مبيعات","رائد أعمال"],studies:["إدارة أعمال","قانون"]}, C:{name:"تقليدي / منظم",jobs:["محاسب","أمين مستودع"],studies:["المحاسبة","نظم معلومات"]} };
+
+    // ======================= بيانات اختبار اللغة الإنجليزية =======================
+    const englishQuestions = [
+        { text:"1. She _______ to school every day.", options:["go","goes","going","went"], correct:"goes" },{ text:"2. I _______ a new car last week.", options:["buy","bought","buys","buying"], correct:"bought" },{ text:"3. There aren't _______ apples left.", options:["some","any","no","a"], correct:"any" },{ text:"4. My brother is _______ than me.", options:["tall","taller","the tallest","more tall"], correct:"taller" },{ text:"5. _______ you like ice cream?", options:["Does","Do","Is","Are"], correct:"Do" },
+        { text:"6. He _______ to the party because he was ill.", options:["didn't come","not came","didn't came","no come"], correct:"didn't come" },{ text:"7. This is the _______ movie I've ever seen.", options:["most boring","boringest","more boring","boring"], correct:"most boring" },{ text:"8. If it rains tomorrow, we _______ at home.", options:["stay","will stay","stayed","would stay"], correct:"will stay" },{ text:"9. She speaks English _______ than her brother.", options:["more fluently","fluently","most fluently","fluent"], correct:"more fluently" },{ text:"10. I'm looking forward _______ you soon.", options:["to see","seeing","to seeing","see"], correct:"to seeing" },
+        { text:"11. By the time we arrived, the movie _______.", options:["started","had started","has started","was starting"], correct:"had started" },{ text:"12. She advised me _______ a doctor.", options:["to see","seeing","see","saw"], correct:"to see" },{ text:"13. It's high time you _______ working harder.", options:["start","started","have started","will start"], correct:"started" },{ text:"14. He _______ in London for five years before he moved to Paris.", options:["has lived","had lived","lived","was living"], correct:"had lived" },{ text:"15. The teacher made us _______ the exercise again.", options:["do","to do","doing","did"], correct:"do" },
+        { text:"16. _______ the rain, we went for a walk.", options:["Despite","Although","In spite","Even though"], correct:"Despite" },{ text:"17. She is _______ a talented musician that everyone admires her.", options:["so","such","very","too"], correct:"such" },{ text:"18. I wish I _______ more time to travel.", options:["have","had","would have","have had"], correct:"had" },{ text:"19. The committee _______ agreed on the final proposal.", options:["has","have","is","are"], correct:"has" },{ text:"20. Not until the bell rang _______ to leave.", options:["students were allowed","were students allowed","allowed students","did students allow"], correct:"were students allowed" },
+        { text:"21. Had it not been for your help, I _______ succeeded.", options:["would have never","would never have","never would have","had never"], correct:"would never have" },{ text:"22. The CEO is known for _______ decisions without hesitation.", options:["making","make","to make","made"], correct:"making" },{ text:"23. The new policy is _______ to increase productivity.", options:["intended","intending","intent","intention"], correct:"intended" },{ text:"24. Scarcely _______ the house when the storm broke.", options:["had we left","we had left","did we leave","we left"], correct:"had we left" },{ text:"25. Her argument was so _______ that no one could refute it.", options:["cogent","vague","ambiguous","superficial"], correct:"cogent" },
+        { text:"26. The professor has a _______ knowledge of ancient languages.", options:["profound","shallow","negligible","superficial"], correct:"profound" },{ text:"27. The two theories are _______ different from each other.", options:["fundamentally","slightly","marginally","trivially"], correct:"fundamentally" },{ text:"28. He tends to _______ his achievements, which annoys his colleagues.", options:["downplay","exaggerate","understate","minimize"], correct:"exaggerate" },{ text:"29. The government's response to the crisis was _______ at best.", options:["inept","skilled","adept","proficient"], correct:"inept" },{ text:"30. The novel provides a _______ insight into the human condition.", options:["profound","shallow","banal","trite"], correct:"profound" }
+    ];
+    let englishAnswers = new Array(30).fill(null);
+
+    // ======================= بيانات اختبار الذكاء =======================
+    const iqQuestions = [
+        { text:"1. ما هو الرقم التالي: 2، 6، 14، 30، 62، ؟", options:["94","126","128","130"], correct:"126" },{ text:"2. زاوية الساعة 3:15؟", options:["0°","7.5°","15°","30°"], correct:"7.5°" },{ text:"3. أي لا ينتمي؟", options:["تفاحة","موزة","برتقال","طماطم"], correct:"طماطم" },{ text:"4. 3، 9، 27، 81، ؟", options:["162","243","324","405"], correct:"243" },{ text:"5. إذا 5+3=28، 9+1=810، 8+6=214، فما 5+4؟", options:["19","20","21","22"], correct:"19" },
+        { text:"6. قدم : جورب :: يد : ؟", options:["خاتم","قفاز","ساعة","كم"], correct:"قفاز" },{ text:"7. أي رقم مختلف: 37،47،57،67", options:["37","47","57","67"], correct:"57" },{ text:"8. بعد 100 يوم من الأربعاء؟", options:["السبت","الأحد","الاثنين","الثلاثاء"], correct:"السبت" },{ text:"9. ترتيب الصناديق (تفاح، برتقال، موز)؟", options:["تفاح-موز-برتقال","تفاح-برتقال-موز","موز-تفاح-برتقال","برتقال-تفاح-موز"], correct:"تفاح-موز-برتقال" },{ text:"10. 1،4،9،16،25،؟", options:["30","34","36","49"], correct:"36" },
+        { text:"11. طي الورقة ينتج؟", options:["مستطيل","مثلث","نصف مربع","شكل معين"], correct:"مستطيل" },{ text:"12. عدد إذا ضربته في نفسه +5 =30؟", options:["4","5","6","7"], correct:"5" },{ text:"13. بحر : ملح :: نهر : ؟", options:["ماء عذب","سمك","قارب","جسر"], correct:"ماء عذب" },{ text:"14. الأعداد الأولية: 2،3،5،7،11،13،17،؟", options:["18","19","20","21"], correct:"19" },{ text:"15. 3 طلاب يرسمون 3 لوحات في 3 أيام، 6 طلاب في 6 أيام؟", options:["6","9","12","18"], correct:"12" },
+        { text:"16. أكمل النمط: ○، ●، ○○، ●●، ○○○، ؟", options:["●●●","○○○○","●●●●","○○○"], correct:"●●●" },{ text:"17. 5 أقلام+3 دفاتر=23، 3 أقلام+5 دفاتر=25، سعر القلم؟", options:["2","2.5","3","3.5"], correct:"2.5" },{ text:"18. كلمة مختلفة: سعادة، فرح، حزن، سرور", options:["سعادة","فرح","حزن","سرور"], correct:"حزن" },{ text:"19. إذا أشرق الشمس من الغرب فما لون البحر؟", options:["أزرق","أخضر","رمادي","لا يمكن"], correct:"أزرق" },{ text:"20. 2،6،12،20،30،؟", options:["36","40","42","48"], correct:"42" },
+        { text:"21. 7 ساعات تدق 7 ثوانٍ عند الساعة 7، فكم ثانية لـ10 ساعات عند الساعة 10؟", options:["7","8","9","10"], correct:"9" },{ text:"22. أي رقم غير مناسب: 4،9،16،25،36،49،64،81", options:["36","49","64","81"], correct:"36" },{ text:"23. 2+3=10، 7+2=63، 6+5=66، فما 8+4؟", options:["96","72","112","84"], correct:"96" },{ text:"24. 1،11،21،1211،111221،؟", options:["312211","312221","311221","312211"], correct:"312211" },{ text:"25. كل أ ب، بعض ب ج، هل كل أ ج؟", options:["نعم","لا","ربما","لا يمكن"], correct:"لا" },
+        { text:"26. كلما أخذت منه زاد؟", options:["الماء","الرمل","الحفرة","الهواء"], correct:"الحفرة" },{ text:"27. 5 عمال في 12 يوم، كم عامل في 4 أيام؟", options:["10","12","15","20"], correct:"15" },{ text:"28. كلمة مختلفة: قطار، سيارة، طائرة، سفينة", options:["قطار","سيارة","طائرة","سفينة"], correct:"سيارة" },{ text:"29. 1=1،2=2،3=6،4=24،5=120،6=؟", options:["600","720","840","960"], correct:"720" },{ text:"30. 2،8،18،32،50،؟", options:["62","68","72","78"], correct:"72" }
+    ];
+    let iqAnswers = new Array(30).fill(null);
+
+    // دوال مساعدة لعرض الأسئلة لكل اختبار
+    function renderHolland() {
+        let html = '';
+        hollandQuestions.forEach((q, idx) => {
+            const val = hollandAnswers[idx];
+            html += `<div class="question-card" data-qidx="${idx}"><div class="question-text">${idx+1}. ${q.text}</div><div class="options">`;
+            for(let i=1;i<=5;i++) {
+                let label = i===1?'لا':i===2?'قليلاً':i===3?'محايد':i===4?'موافق':'بشدة';
+                html += `<div class="option ${val===i?'selected':''}" data-val="${i}">${i}<br><span style="font-size:0.65rem;">${label}</span></div>`;
+            }
+            html += `</div></div>`;
+        });
+        document.getElementById('holland-questions').innerHTML = html;
+        attachHollandEvents();
+        updateHollandProgress();
+    }
+    function attachHollandEvents() {
+        document.querySelectorAll('#holland-questions .question-card').forEach(card => {
+            const qidx = parseInt(card.getAttribute('data-qidx'));
+            const opts = card.querySelectorAll('.option');
+            opts.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const val = parseInt(opt.getAttribute('data-val'));
+                    hollandAnswers[qidx] = val;
+                    opts.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    updateHollandProgress();
+                });
+            });
+        });
+    }
+    function updateHollandProgress() {
+        const answered = hollandAnswers.filter(a => a!==null).length;
+        document.getElementById('holland-progress').style.width = (answered/30)*100 + '%';
+    }
+    function computeHolland() {
+        if(hollandAnswers.includes(null)){ alert('أجب عن جميع الأسئلة'); return; }
+        const scores={R:0,I:0,A:0,S:0,E:0,C:0};
+        hollandQuestions.forEach((q,i)=> scores[q.type] += hollandAnswers[i]);
+        const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+        const primary=sorted[0][0], secondary=sorted[1][0], tertiary=sorted[2][0];
+        const recP = hollandRec[primary], recS = hollandRec[secondary], recT = hollandRec[tertiary];
+        let jobs = [...recP.jobs, ...recS.jobs.slice(0,2), ...recT.jobs.slice(0,1)];
+        jobs = [...new Set(jobs)].slice(0,6);
+        let studies = [...recP.studies, ...recS.studies.slice(0,2), ...recT.studies.slice(0,1)];
+        studies = [...new Set(studies)].slice(0,6);
+        const html = `<div class="result-level">🏆 النمط الأساسي: ${recP.name} (${primary})</div><div class="level-description"><strong>💼 وظائف:</strong><br>${jobs.join(' - ')}</div><div class="level-description"><strong>📚 تخصصات:</strong><br>${studies.join(' - ')}</div>`;
+        document.getElementById('holland-result').innerHTML = html;
+        document.getElementById('holland-result').style.display = 'block';
+        document.getElementById('holland-submit').style.display = 'none';
+        document.getElementById('holland-reset').style.display = 'block';
+    }
+    function resetHolland() { hollandAnswers.fill(null); renderHolland(); document.getElementById('holland-result').style.display='none'; document.getElementById('holland-submit').style.display='block'; document.getElementById('holland-reset').style.display='none'; }
+
+    // اختبار اللغة
+    function renderEnglish() {
+        let html = '';
+        englishQuestions.forEach((q, idx) => {
+            const selected = englishAnswers[idx];
+            html += `<div class="question-card" data-qidx="${idx}"><div class="question-text">${q.text}</div><div class="options">`;
+            q.options.forEach(opt => { html += `<div class="option ${selected===opt?'selected':''}" data-opt="${opt}">${opt}</div>`; });
+            html += `</div></div>`;
+        });
+        document.getElementById('english-questions').innerHTML = html;
+        attachEnglishEvents();
+        updateEnglishProgress();
+    }
+    function attachEnglishEvents() {
+        document.querySelectorAll('#english-questions .question-card').forEach(card => {
+            const qidx = parseInt(card.getAttribute('data-qidx'));
+            const opts = card.querySelectorAll('.option');
+            opts.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const selected = opt.getAttribute('data-opt');
+                    englishAnswers[qidx] = selected;
+                    opts.forEach(o=>o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    updateEnglishProgress();
+                });
+            });
+        });
+    }
+    function updateEnglishProgress() {
+        const answered = englishAnswers.filter(a=>a!==null).length;
+        document.getElementById('english-progress').style.width = (answered/30)*100+'%';
+    }
+    function computeEnglish() {
+        if(englishAnswers.includes(null)){ alert('أكمل جميع الأسئلة'); return; }
+        let score=0;
+        englishQuestions.forEach((q,i)=>{ if(englishAnswers[i]===q.correct) score++; });
+        let level='';
+        if(score<=9) level='A1'; else if(score<=14) level='A2'; else if(score<=19) level='B1'; else if(score<=24) level='B2'; else if(score<=27) level='C1'; else level='C2';
+        const desc = {A1:'مبتدئ',A2:'ما قبل المتوسط',B1:'متوسط',B2:'فوق المتوسط',C1:'متقدم',C2:'متمكن'};
+        const html = `<div class="result-level">🎯 مستواك: ${desc[level]} (${level})</div><div class="level-description">✅ ${score} من 30 صحيحة</div>`;
+        document.getElementById('english-result').innerHTML = html;
+        document.getElementById('english-result').style.display = 'block';
+        document.getElementById('english-submit').style.display = 'none';
+        document.getElementById('english-reset').style.display = 'block';
+    }
+    function resetEnglish() { englishAnswers.fill(null); renderEnglish(); document.getElementById('english-result').style.display='none'; document.getElementById('english-submit').style.display='block'; document.getElementById('english-reset').style.display='none'; }
+
+    // اختبار الذكاء
+    function renderIQ() {
+        let html = '';
+        iqQuestions.forEach((q, idx) => {
+            const selected = iqAnswers[idx];
+            html += `<div class="question-card" data-qidx="${idx}"><div class="question-text">${q.text}</div><div class="options">`;
+            q.options.forEach(opt => { html += `<div class="option ${selected===opt?'selected':''}" data-opt="${opt}">${opt}</div>`; });
+            html += `</div></div>`;
+        });
+        document.getElementById('iq-questions').innerHTML = html;
+        attachIQEvents();
+        updateIQProgress();
+    }
+    function attachIQEvents() {
+        document.querySelectorAll('#iq-questions .question-card').forEach(card => {
+            const qidx = parseInt(card.getAttribute('data-qidx'));
+            const opts = card.querySelectorAll('.option');
+            opts.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const selected = opt.getAttribute('data-opt');
+                    iqAnswers[qidx] = selected;
+                    opts.forEach(o=>o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    updateIQProgress();
+                });
+            });
+        });
+    }
+    function updateIQProgress() {
+        const answered = iqAnswers.filter(a=>a!==null).length;
+        document.getElementById('iq-progress').style.width = (answered/30)*100+'%';
+    }
+    function computeIQ() {
+        if(iqAnswers.includes(null)){ alert('أكمل جميع الأسئلة'); return; }
+        let score=0;
+        iqQuestions.forEach((q,i)=>{ if(iqAnswers[i]===q.correct) score++; });
+        let iqScore = 70;
+        if(score<=9) iqScore=70+Math.floor((score/9)*15);
+        else if(score<=15) iqScore=85+Math.floor(((score-9)/6)*15);
+        else if(score<=21) iqScore=100+Math.floor(((score-15)/6)*15);
+        else if(score<=26) iqScore=115+Math.floor(((score-21)/5)*15);
+        else iqScore=130+Math.floor(((score-26)/4)*15);
+        let classification = '';
+        if(iqScore<70) classification='منخفض جداً';
+        else if(iqScore<=84) classification='أقل من المتوسط';
+        else if(iqScore<=115) classification='متوسط';
+        else if(iqScore<=129) classification='أعلى من المتوسط';
+        else if(iqScore<=144) classification='متفوق';
+        else classification='عبقري';
+        const html = `<div class="result-level">🧠 نسبة الذكاء التقريبية: ${iqScore}</div><div class="level-description">✅ ${score} من 30 صحيحة<br>التصنيف: ${classification}</div>`;
+        document.getElementById('iq-result').innerHTML = html;
+        document.getElementById('iq-result').style.display = 'block';
+        document.getElementById('iq-submit').style.display = 'none';
+        document.getElementById('iq-reset').style.display = 'block';
+    }
+    function resetIQ() { iqAnswers.fill(null); renderIQ(); document.getElementById('iq-result').style.display='none'; document.getElementById('iq-submit').style.display='block'; document.getElementById('iq-reset').style.display='none'; }
+
+    // التبديل بين الاختبارات
+    let activeTest = 'holland';
+    function switchTest(testId) {
+        document.querySelectorAll('.test-content').forEach(el => el.classList.remove('active-test'));
+        document.getElementById(`${testId}-test`).classList.add('active-test');
+        document.querySelectorAll('.test-card').forEach(card => card.classList.remove('active'));
+        document.querySelector(`.test-card[data-test="${testId}"]`).classList.add('active');
+        activeTest = testId;
+    }
+
+    // ربط الأزرار والأحداث
+    document.addEventListener('DOMContentLoaded', () => {
+        renderHolland(); renderEnglish(); renderIQ();
+        document.getElementById('holland-submit').addEventListener('click', computeHolland);
+        document.getElementById('holland-reset').addEventListener('click', resetHolland);
+        document.getElementById('english-submit').addEventListener('click', computeEnglish);
+        document.getElementById('english-reset').addEventListener('click', resetEnglish);
+        document.getElementById('iq-submit').addEventListener('click', computeIQ);
+        document.getElementById('iq-reset').addEventListener('click', resetIQ);
+        document.querySelectorAll('.test-card').forEach(card => {
+            card.addEventListener('click', () => switchTest(card.getAttribute('data-test')));
+        });
+        switchTest('holland'); // افتراضي
+    });
+</script>
+</body>
+</html>
